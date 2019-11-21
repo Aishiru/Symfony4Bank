@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Beneficiary to Person{% endblock %}
+
+{% block body %}
+    <h1>Add Beneficiary to Person</h1>
+
+    {{ include('person/_form.html.twig') }}
+
+    <a href="{{ path('person_index') }}">back to list</a>
+{% endblock %}

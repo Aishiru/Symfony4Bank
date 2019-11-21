@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Account{% endblock %}
+
+{% block body %}
+    <h1>Account</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ account.id }}</td>
+            </tr>
+            <tr>
+                <th>Iban</th>
+                <td>{{ account.iban }}</td>
+            </tr>
+            <tr>
+                <th>Balance</th>
+                <td>{{ account.balance }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ account.type }}</td>
+            </tr>
+            <tr>
+                <th>Owner</th>
+                <td>{{ account.owner.firstname }} {{ account.owner.lastname }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Debits</th>
+            <th>Credits</th>
+        </tr>
+        {% for transaction in debitsCredits|sort((a, b) => a.date <=> b.date) %}
+            <tr>
+                <td>{{ transaction.date|date("d-m-Y H:i:s") }}
+                <td>{% if transaction.debitAccount.id == account.id %}<a style="color:red" href="{{ path('transaction_show', {'id': transaction.id}) }}">{{ transaction.amount }}</a>{% endif %}</td>
+                <td>{% if transaction.creditAccount.id == account.id %}<a style="color:green" href="{{ path('transaction_show', {'id': transaction.id}) }}">{{ transaction.amount }}</a>{% endif %}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ path('account_index') }}">back to list</a>
+
+    <a href="{{ path('account_edit', {'id': account.id}) }}">edit</a>
+
+    {{ include('account/_delete_form.html.twig') }}
+{% endblock %}

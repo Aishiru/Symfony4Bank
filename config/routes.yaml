@@ -1,0 +1,3 @@
+index:
+   path: /{name}/{old}/{component}
+   controller: App\Controller\DefaultController::index
